@@ -54,11 +54,10 @@ class RecipeResource(Resource):
 
     @marshal_with(recipe_fields)
     def get(self, id):
-        recipe = session.query(Recipe).filter(and_(Recipe.id == id), (Recipe.done == False)).first()
+        recipe = session.query(Recipe).filter(Recipe.id == id).first()
 
         if not recipe:
-            abort(404, message="Recipe with id {} does not exist or has already been done".format(id))
-        session.commit()
+            abort(404, message="Recipe with id {} does not exist".format(id))
         return recipe, 201
 
     @marshal_with(recipe_fields)
