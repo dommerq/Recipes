@@ -45,12 +45,12 @@ class DailyRecipeSender(Resource):
     @marshal_with(recipe_fields)
     def get(self):
         random = RandomRecipeFinder()
-        id = random.find()
+        recipe = random.find()
 
         parse = Parse()
-        parse.send_push(id)
+        parse.send_push(recipe.id)
 
-        return id
+        return recipe
 
 
 class DailyRecipeLeft(Resource):
@@ -58,6 +58,7 @@ class DailyRecipeLeft(Resource):
     def get(self):
         recipes = session.query(Recipe).filter(Recipe.done == False).all()
         return recipes
+
 
 class DailyRecipeReset(Resource):
     def get(self):
