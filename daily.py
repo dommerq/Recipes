@@ -1,4 +1,4 @@
-from flask import json
+from flask import json, jsonify
 from flask.ext.restful import abort, Resource, marshal_with
 from sqlalchemy import func
 import requests
@@ -34,7 +34,7 @@ class RandomRecipeFinder:
 
 
 class Parse:
-    def sendPush(self, id):
+    def send_push(self, id):
         data = json.dumps({"data":{"recipe": "{}".format(id)}, "where":{}})
         r = requests.post(parse_url, headers=headers, data=data)
         print r.content
@@ -49,7 +49,7 @@ class DailyRecipeSender(Resource):
         id = random.find()
 
         parse = Parse()
-        parse.sendPush(id)
+        parse.send_push(id)
 
         return id, 200
 
@@ -58,8 +58,4 @@ class DailyRecipeReset(Resource):
     def get(self):
         random = RandomRecipeFinder()
         random.reset()
-        return "ok", 200
-
-if __name__ == '__main__':
-    random = RandomRecipeFinder()
-    random.reset()
+        return {"message": "ok"}, 200
