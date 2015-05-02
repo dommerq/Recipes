@@ -3,6 +3,7 @@ from sqlalchemy import Integer
 from sqlalchemy import Float
 from sqlalchemy import String
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship, backref
 
 Base = declarative_base()
 
@@ -21,7 +22,7 @@ class Recipe(Base):
     rating = Column(Float)
     yielding_number = Column(Integer)
     yielding_unit = Column(String)
-    # ingredients = relationship('Ingredient', secondary=association_table, backref=backref('pages', lazy='dynamic'), lazy='joined')
+    ingredients = relationship('Ingredient', secondary=association_table, backref=backref('pages', lazy='dynamic'), lazy='joined')
 
     def __repr__(self):
         return '<Recipe %r>' % self.title

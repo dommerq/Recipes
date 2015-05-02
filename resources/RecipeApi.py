@@ -6,12 +6,20 @@ from flask_restful import Resource, abort, marshal_with, fields
 from schema.schema import recipe_schema
 
 from settings.db import session
-from models.RecipeModel import Recipe
+from models.RecipeModel import Recipe, Ingredient
 
 
 parser = reqparse.RequestParser()
 parser.add_argument('id', type=int)
 parser.add_argument('name', type=str)
+
+ingredient_fields = {
+    'id': fields.Integer,
+    'name': fields.String,
+    'quantity': fields.String(attribute="metric_display_quantity"),
+    'unit': fields.String(attribute="metric_unit"),
+    'preparation': fields.String(attribute="preparation_notes")
+}
 
 recipe_fields = {
     'id': fields.Integer,
@@ -20,7 +28,8 @@ recipe_fields = {
     'primary_ingredient': fields.String,
     'rating': fields.Float,
     'yielding_number': fields.Integer,
-    'yielding_unit': fields.String
+    'yielding_unit': fields.String,
+    'ingredients': fields.List(fields.Nested(ingredient_fields))
 }
 
 bigoven_url = "http://api.bigoven.com/recipe/"
@@ -49,12 +58,6 @@ class RecipeResource(Resource):
         args = parser.parse_args()
         recipeJson = get_recipe_from_bigoven()
         recipe, err = recipe_schema.load(json.loads(recipeJson))
-
-        # recipe = session.query(Recipe).filter(Recipe.id == args['id']).first()
-        # if not recipe:
-        #     recipe = Recipe()
-        # recipe.id = args['id']
-        # recipe.name = args['name']
         session.add(recipe)
         session.commit()
         return recipe_schema.dump(recipe), 201
