@@ -10,4 +10,4 @@ api = Api(app)
 api.add_resource(RecipeResource, '/recipe', '/recipe/<int:id>', endpoint="recipe")
 api.add_resource(RecipesListResource, '/recipes', '/recipe/<int:id>', endpoint="recipes")
 
-app.run(debug=True)
+app.run(host='0.0.0.0', debug=True)

@@ -4,8 +4,8 @@ from sqlalchemy.orm import sessionmaker
 
 from settings import DB_URI
 
-
+engine = create_engine(DB_URI, echo=True)
 Session = sessionmaker(autocommit=False,
                        autoflush=False,
-                       bind=create_engine(DB_URI))
+                       bind=engine)
 session = scoped_session(Session)

@@ -1,2 +1,4 @@
+marshmallow
 sqlalchemy
 flask
+flask_restful
