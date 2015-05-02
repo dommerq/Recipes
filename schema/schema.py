@@ -6,15 +6,18 @@ from models.RecipeModel import Recipe, Ingredient
 class RecipeSchema(Schema):
 
     class Meta:
-        fields = ('RecipeID', 'Title', 'ImageURL', "PrimaryIngredient", "StarRating", "YieldNumber", "YieldUnit", "Ingredients")
+        fields = ("RecipeID", "Title", "WebURL", "Instructions", "ImageURL", "PrimaryIngredient", "StarRating", "YieldNumber", "YieldUnit", "Ingredients")
 
     def make_object(self, data):
         recipe = Recipe()
         recipe.id = data.get('RecipeID')
         recipe.title = data.get('Title')
         recipe.image_url = data.get('ImageURL')
+        recipe.instructions = data.get('Instructions')
         recipe.primary_ingredient = data.get('PrimaryIngredient')
         recipe.rating = data.get('StarRating')
+        recipe.done = False
+        recipe.url = data.get('WebURL')
         recipe.yielding_number = data.get('YieldNumber')
         recipe.yielding_unit = data.get('YieldUnit')
 

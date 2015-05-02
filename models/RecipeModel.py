@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Table, ForeignKey
+from sqlalchemy import Column, Table, ForeignKey, Boolean
 from sqlalchemy import Integer
 from sqlalchemy import Float
 from sqlalchemy import String
@@ -22,6 +22,9 @@ class Recipe(Base):
     rating = Column(Float)
     yielding_number = Column(Integer)
     yielding_unit = Column(String)
+    url = Column(String)
+    done = Column(Boolean)
+    instructions = Column(String)
     ingredients = relationship('Ingredient', secondary=association_table, backref=backref('pages', lazy='dynamic'), lazy='joined')
 
     def __repr__(self):
