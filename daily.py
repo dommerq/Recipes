@@ -1,9 +1,9 @@
-from flask import json, jsonify
+from flask import json
 from flask.ext.restful import abort, Resource, marshal_with
 from sqlalchemy import func
 import requests
-from resources.RecipeApi import recipe_fields
 
+from resources.RecipeApi import recipe_fields
 from settings.db import session
 from models.RecipeModel import Recipe
 

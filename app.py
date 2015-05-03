@@ -1,4 +1,5 @@
 from flask import Flask
+from flask.ext.cors import CORS
 from flask_restful import Api
 from daily import DailyRecipeSender, DailyRecipeReset, DailyRecipeLeft
 
@@ -6,6 +7,7 @@ from resources.RecipeApi import RecipeResource, RecipesListResource
 
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 api = Api(app)
 
 api.add_resource(RecipeResource, '/recipe', '/recipe/<int:id>', endpoint="recipe")

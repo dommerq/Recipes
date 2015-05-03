@@ -69,6 +69,11 @@ class RecipeResource(Resource):
         session.commit()
         return recipe, 201
 
+    def options(self):
+        return {'Allow': 'PUT'}, 200, \
+               {'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'PUT,GET'}
+
 
 class RecipesListResource(Resource):
 
